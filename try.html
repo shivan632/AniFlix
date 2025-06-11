@@ -1,0 +1,121 @@
+<html>
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul style="list-style: none; display: flex; gap: 20px; border: 1px solid black; padding: 10px; border-radius: 45px; margin-left: 5px; padding-left: 7px;">
+                <li><a href="index">Home</a></li>
+                <li><a href="about">About</a></li>
+                <li><a href="contact">Contact</a></li>
+                <li><a href="services">Services</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        
+    <table border="3" cellpadding="3" cellspacing="2" width="300px" height="200px" align="center">
+        <tr bgcolor="orange" align="center">
+            <td>Shivan</td>
+            <td>Aastha</td>
+            <td>Muskan</td>
+        </tr>
+        <tr bgcolor="white" align="center">
+            <td>Tushar</td>
+            <td bgcolor="blue">Prakarsh</td>
+            <td>Prakhar</td>
+        </tr>
+        <tr bgcolor="green" align="center">
+            <td>Harsh</td>
+            <td>Komal</td>
+            <td>Neha</td>
+        </tr>
+    </table>
+    <details>
+        <summary>Click to see the details</summary>
+        <p>This is a paragraph inside the details tag.</p>
+        <p>Another paragraph inside the details tag.</p>
+    </details>
+    <details>
+        <summary>Click here for more details</summary>
+        <p>My name is Shivan Mishra</p>
+        <p>And at present I am doing BCA-IBM and I am in 2nd yr 4th Sem</p>
+        <p>Subjects are:--AWD, DAA, OS, ML, PP</p>
+    </details>
+    <figure>
+        <img src="Anime_image/Anime_logo.png" alt="Aastha website images" width="300" height="200">
+        <figcaption>Solo Leveling background image with 3 shadows and 1 Shadow Monak</figcaption>
+    </figure>
+    <main>Shivan Mishra <mark>BCA-IBM 2nd Yr 4th Sem</mark> in College University</main>
+    </section>
+
+    <section>
+        <select style="border-radius: 20px; ">
+            <option>Select</option>
+            <optgroup label="Group A">
+                <option>Shivan</option>
+                <option>Tushar</option>
+                <option>Muskan</option>
+            </optgroup>
+            <optgroup label="Group B">
+                <option>Prakarsh</option>
+                <option>Prakhar</option>
+                <option>Aastha</option>
+            </optgroup>
+        </select>
+    </section>
+    <section>
+        <input list="browsers" placeholder="Choose or type...">
+            <datalist id="browsers">
+                <option value="Chrome"> <!-- Common typo, should be "Chrome" or "Chrome"? -->
+                <option value="Firefox">
+                <option value="Edge">
+                <option value="Safari">
+                <option value="Opera">
+            </datalist>
+    </section>
+    <section>
+        <center>
+            <form>
+                <fieldset>
+                    <legend>Application form</legend>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name"><br><br>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email"><br><br>
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone"><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password"><br>
+                    <button type="submit" style="margin-top: 10px;">Submit</button>
+                    <button type="reset" style="margin-top: 10px;">Reset</button>
+                </fieldset>
+            </form>
+        </center>
+    </section>
+    <script>
+        var name = "Shivan Mishra";
+        var age = 20;
+        if(age >= 18) {
+            console.log(name + " is an adult.");
+        } else {
+            console.log(name + " is a minor.");
+        }
+        if(name==="Shivan Mishra") {
+            console.log("Name is correct.");
+        } else {
+            console.log("Name is incorrect.");
+        }
+
+        var n = 5;
+        for (var i = 0; i < n; i++) {
+            var line = "";
+            for (var j = 0; j <= i; j++) {
+                line += "* ";
+            }
+            console.log(line);
+        }
+    </script>
+</body>
+</html>
