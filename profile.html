@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AniFlix - My Profile</title>
+    <link rel="icon" href="Anime_image/Anime_logo.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --primary-dark: #c40812;
+            --dark-color: #141414;
+            --darker-color: #0a0a0a;
+            --light-color: #f4f4f4;
+            --lighter-color: #ffffff;
+            --accent-color: #00a8e8;
+            --gray-color: #aaa;
+            --dark-gray: #333;
+            --medium-gray: #666;
+            --light-gray: #e0e0e0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(to bottom, #1A1350, var(--dark-color));
+            padding-top: 80px;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-item {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--light-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: rgba(94, 58, 227, 0.2);
+            color: var(--accent-color);
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .sidebar-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            color: var(--light-color);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        /* Profile Card Styles */
+        .profile-card {
+            background-color: var(--darker-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+        }
+        
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .stats-card {
+            background-color: var(--darker-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--dark-gray);
+        }
+        
+        .stats-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Form Styles */
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--dark-gray);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+        
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 0 0 0.25rem rgba(229, 9, 20, 0.25);
+            border-color: var(--primary-color);
+        }
+        
+        .form-label {
+            color: var(--light-color);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .input-group-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--dark-gray);
+            color: var(--gray-color);
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(229, 9, 20, 0.3);
+        }
+        
+        .btn-outline-danger {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Checkbox Styles */
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        /* Tab Styles */
+        .nav-tabs {
+            border-bottom: 1px solid var(--dark-gray);
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--gray-color);
+            border: none;
+            padding: 12px 20px;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background-color: transparent;
+        }
+        
+        .nav-tabs .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .nav-tabs .nav-link:hover:not(.active) {
+            color: var(--light-color);
+        }
+        
+        /* Anime Cards */
+        .anime-card {
+            background-color: var(--darker-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+        }
+        
+        .anime-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+            width: 100%;
+        }
+        
+        .anime-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        
+        /* Progress Bar */
+        .progress {
+            height: 5px;
+            background-color: var(--dark-gray);
+            border-radius: 3px;
+        }
+        
+        .progress-bar {
+            background-color: var(--accent-color);
+        }
+        
+        /* Dropdown Menu */
+        .dropdown-menu {
+            background-color: var(--darker-color);
+            border: 1px solid var(--dark-gray);
+        }
+        
+        .dropdown-item {
+            color: var(--light-color);
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--dark-gray);
+            color: var(--light-color);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="index.html" class="sidebar-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#profile" class="sidebar-link">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="fav_list.html" class="sidebar-link">
+                    <i class="fas fa-heart"></i>
+                    <span>Anime List</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="fav_list.html" class="sidebar-link">
+                    <i class="fas fa-bolt"></i>
+                    <span>New Releases</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="fav_list.html" class="sidebar-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="sidebar-item mt-4">
+                <a href="#" class="sidebar-link text-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="tab-content">
+            <!-- Profile Tab -->
+            <div class="tab-pane active" id="profile">
+                <h2 class="section-title"><i class="fas fa-user me-2"></i> My Profile</h2>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-card text-center p-4">
+                            <img src="Anime_image/gallery5.png" alt="Profile Picture" class="profile-pic mb-3">
+                            <h4>@Username</h4>
+                            <p class="text-muted">Anime Enthusiast</p>
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-camera me-1"></i> Change Photo
+                            </button>
+                        </div>
+                        
+                        <div class="stats-card">
+                            <h5><i class="fas fa-chart-line me-2"></i> Stats</h5>
+                            <div class="stats-item">
+                                <span>Watched</span>
+                                <span class="badge bg-primary rounded-pill">247</span>
+                            </div>
+                            <div class="stats-item">
+                                <span>Watching</span>
+                                <span class="badge bg-primary rounded-pill">12</span>
+                            </div>
+                            <div class="stats-item">
+                                <span>Plan to Watch</span>
+                                <span class="badge bg-primary rounded-pill">56</span>
+                            </div>
+                            <div class="stats-item">
+                                <span>Favorites</span>
+                                <span class="badge bg-primary rounded-pill">24</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-8">
+                        <div class="profile-card p-4">
+                            <h4 class="mb-4">Profile Information</h4>
+                            
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" value="Anime">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" value="Fan">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">@</span>
+                                        <input type="text" class="form-control" id="username" value="Username">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" value="user@aniflix.com">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label">Bio</label>
+                                    <textarea class="form-control" id="bio" rows="3">Passionate anime fan who loves shonen and isekai genres. Currently obsessed with Demon Slayer and Jujutsu Kaisen!</textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Favorite Genres</label>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="action" checked>
+                                            <label class="form-check-label" for="action">Action</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="adventure" checked>
+                                            <label class="form-check-label" for="adventure">Adventure</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="fantasy" checked>
+                                            <label class="form-check-label" for="fantasy">Fantasy</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="comedy">
+                                            <label class="form-check-label" for="comedy">Comedy</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="romance">
+                                            <label class="form-check-label" for="romance">Romance</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="scifi">
+                                            <label class="form-check-label" for="scifi">Sci-Fi</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i> Save Changes
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- My List Tab -->
+            <div class="tab-pane" id="mylist">
+                <h2 class="section-title"><i class="fas fa-bookmark me-2"></i> My Anime List</h2>
+                
+                <ul class="nav nav-tabs mb-4" id="myListTabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#watching">Watching (12)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#completed">Completed (247)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#planned">Plan to Watch (56)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#favorites">Favorites (24)</a>
+                    </li>
+                </ul>
+                
+                <div class="tab-content">
+                    <!-- Currently Watching -->
+                    <div class="tab-pane active" id="watching">
+                        <div class="row">
+                            <!-- Anime Item 1 -->
+                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                <div class="anime-card card">
+                                    <img src="https://i.imgur.com/9ZqQY7y.jpg" class="card-img-top" alt="Demon Slayer">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Demon Slayer</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-primary">Episode 8/26</span>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-play me-2"></i> Continue Watching</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit Progress</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Add to Favorites</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar" style="width: 30%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Anime Item 2 -->
+                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                <div class="anime-card card">
+                                    <img src="https://i.imgur.com/5X6Qy9r.jpg" class="card-img-top" alt="Jujutsu Kaisen">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Jujutsu Kaisen</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-primary">Episode 15/24</span>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-play me-2"></i> Continue Watching</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit Progress</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Add to Favorites</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar" style="width: 62%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Anime Item 3 -->
+                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                <div class="anime-card card">
+                                    <img src="https://i.imgur.com/7V5WQ9x.jpg" class="card-img-top" alt="Attack on Titan">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Attack on Titan</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-primary">Episode 22/25</span>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-play me-2"></i> Continue Watching</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit Progress</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Add to Favorites</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar" style="width: 88%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Anime Item 4 -->
+                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                <div class="anime-card card">
+                                    <img src="https://i.imgur.com/3qR8Q9W.jpg" class="card-img-top" alt="Chainsaw Man">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Chainsaw Man</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-primary">Episode 5/12</span>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-play me-2"></i> Continue Watching</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit Progress</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Add to Favorites</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar" style="width: 42%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Completed -->
+                    <div class="tab-pane" id="completed">
+                        <p class="text-center text-muted py-5">Displaying your completed anime (247 titles)</p>
+                    </div>
+                    
+                    <!-- Plan to Watch -->
+                    <div class="tab-pane" id="planned">
+                        <p class="text-center text-muted py-5">Displaying anime in your watchlist (56 titles)</p>
+                    </div>
+                    
+                    <!-- Favorites -->
+                    <div class="tab-pane" id="favorites">
+                        <p class="text-center text-muted py-5">Displaying your favorite anime (24 titles)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings Tab -->
+            <div class="tab-pane" id="settings">
+                <h2 class="section-title"><i class="fas fa-cog me-2"></i> Settings</h2>
+                
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="profile-card mb-4 p-4">
+                            <h4 class="mb-4"><i class="fas fa-user-shield me-2"></i> Account Settings</h4>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Change Password</label>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" placeholder="Current Password">
+                                </div>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    <input type="password" class="form-control" placeholder="New Password">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    <input type="password" class="form-control" placeholder="Confirm New Password">
+                                </div>
+                                <button class="btn btn-primary mt-3">Update Password</button>
+                            </div>
+                            
+                            <hr>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Account Deletion</label>
+                                <p class="small text-muted">Permanently delete your account and all associated data. This action cannot be undone.</p>
+                                <button class="btn btn-outline-danger">Delete My Account</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="profile-card mb-4 p-4">
+                            <h4 class="mb-4"><i class="fas fa-bell me-2"></i> Notification Preferences</h4>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="newReleases" checked>
+                                <label class="form-check-label" for="newReleases">New episode releases</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="recommendations" checked>
+                                <label class="form-check-label" for="recommendations">Personalized recommendations</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="newsletter">
+                                <label class="form-check-label" for="newsletter">Weekly newsletter</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="promotions">
+                                <label class="form-check-label" for="promotions">Special promotions</label>
+                            </div>
+                            
+                            <button class="btn btn-primary">Save Preferences</button>
+                        </div>
+                        
+                        <div class="profile-card p-4">
+                            <h4 class="mb-4"><i class="fas fa-palette me-2"></i> Appearance</h4>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Theme</label>
+                                <div class="d-flex flex-wrap gap-3">
+                                    <div class="theme-option" data-theme="dark">
+                                        <div class="theme-preview" style="background: #0F0A2E; border: 2px solid #5E3AE3;"></div>
+                                        <span>Dark</span>
+                                    </div>
+                                    <div class="theme-option" data-theme="light">
+                                        <div class="theme-preview" style="background: #f8f9fa; border: 2px solid #dee2e6;"></div>
+                                        <span>Light</span>
+                                    </div>
+                                    <div class="theme-option" data-theme="purple">
+                                        <div class="theme-preview" style="background: #1A1350; border: 2px solid #FF4EC5;"></div>
+                                        <span>Purple</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Video Player</label>
+                                <select class="form-select">
+                                    <option>Default Player</option>
+                                    <option>HTML5 Player</option>
+                                    <option>External Player</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="autoPlay" checked>
+                                <label class="form-check-label" for="autoPlay">Auto-play next episode</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="skipIntro">
+                                <label class="form-check-label" for="skipIntro">Skip intros automatically</label>
+                            </div>
+                            
+                            <button class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme switching functionality
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
+                // Remove active state from all options
+                document.querySelectorAll('.theme-preview').forEach(preview => {
+                    preview.style.border = '2px solid transparent';
+                });
+                // Add active state to selected option
+                this.querySelector('.theme-preview').style.border = '2px solid var(--accent-color)';
+                // In a real app, you would change the theme here
+                showToast(`Theme changed to ${theme}`);
+            });
+        });
+        
+        // List Tabs Functionality
+        document.querySelectorAll('.list-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.list-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filterValue = this.textContent.toLowerCase().replace(/\s+/g, '-');
+                const animeCards = document.querySelectorAll('.anime-card');
+                
+                animeCards.forEach(card => {
+                    // In a real app, you would have data attributes for each anime's status
+                    // For this demo, we'll just show/hide based on favorites
+                    if (filterValue === 'all') {
+                        card.closest('.col-md-6').style.display = 'block';
+                    } 
+                    else if (filterValue === 'favorites') {
+                        const animeId = card.querySelector('.favorite-btn').getAttribute('data-anime-id');
+                        if (isFavorited(animeId)) {
+                            card.closest('.col-md-6').style.display = 'block';
+                        } else {
+                            card.closest('.col-md-6').style.display = 'none';
+                        }
+                    }
+                    else {
+                        // For other filters, you would check the anime's status
+                        // This is just a placeholder - implement your actual filtering logic
+                        card.closest('.col-md-6').style.display = 'none';
+                    }
+                });
+                
+                showToast(`Showing ${this.textContent} list`);
+            });
+        });
+        
+        function isFavorited(animeId) {
+            // In a real app, you would check against user's favorites
+            // This is just a demo - return true for some IDs
+            return [1, 3, 7, 10, 11, 5].includes(parseInt(animeId));
+        }
+        
+        // Toast Notification
+        function showToast(message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 end-0 p-3';
+            toast.style.zIndex = '1100';
+            
+            const toastInner = document.createElement('div');
+            toastInner.className = 'toast show';
+            toastInner.setAttribute('role', 'alert');
+            toastInner.setAttribute('aria-live', 'assertive');
+            toastInner.setAttribute('aria-atomic', 'true');
+            
+            const toastBody = document.createElement('div');
+            toastBody.className = 'toast-body bg-dark text-white rounded';
+            toastBody.textContent = message;
+            
+            toastInner.appendChild(toastBody);
+            toast.appendChild(toastInner);
+            
+            // Add to DOM
+            document.body.appendChild(toast);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+        
+        // Initialize the first theme as active
+        document.querySelector('.theme-option[data-theme="dark"] .theme-preview').style.border = '2px solid var(--accent-color)';
+    </script>
+</body>
+</html>
