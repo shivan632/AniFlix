@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AniFlix - Sign In</title>
+    <link rel="icon" href="Anime_image/Anime_logo.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --primary-dark: #c40812;
+            --dark-color: #141414;
+            --darker-color: #0a0a0a;
+            --light-color: #f4f4f4;
+            --lighter-color: #ffffff;
+            --accent-color: #00a8e8;
+            --gray-color: #aaa;
+            --dark-gray: #333;
+            --medium-gray: #666;
+            --light-gray: #e0e0e0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: url('https://i.imgur.com/9ZqQY7y.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
+            background-color: rgba(20, 20, 20, 0.9);
+        }
+        
+        /* Auth Container */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .auth-card {
+            background-color: var(--darker-color);
+            border-radius: 10px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .auth-card:hover {
+            box-shadow: 0 15px 40px rgba(229, 9, 20, 0.3);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-logo {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .auth-logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .auth-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+        
+        .auth-subtitle {
+            color: var(--gray-color);
+            margin-bottom: 30px;
+        }
+        
+        /* Form Styles */
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--dark-gray);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 0 0 0.25rem rgba(229, 9, 20, 0.25);
+            border-color: var(--primary-color);
+        }
+        
+        .form-label {
+            color: var(--light-color);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .input-group-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--dark-gray);
+            color: var(--gray-color);
+        }
+        
+        /* Button Styles */
+        .btn-auth {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-auth:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(229, 9, 20, 0.3);
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--dark-gray);
+        }
+        
+        .divider-text {
+            padding: 0 10px;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        /* Social Buttons */
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-social {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-google {
+            background-color: #4285F4;
+            color: white;
+        }
+        
+        .btn-facebook {
+            background-color: #4267B2;
+            color: white;
+        }
+        
+        .btn-twitter {
+            background-color: #1DA1F2;
+            color: white;
+        }
+        
+        .btn-social i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        
+        /* Auth Footer */
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--gray-color);
+        }
+        
+        .auth-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-footer a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        /* Toggle between Sign In and Sign Up */
+        .auth-toggle {
+            display: none;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 576px) {
+            .auth-card {
+                padding: 30px 20px;
+            }
+            
+            .social-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <!-- Sign In Card (Visible by default) -->
+        <div class="auth-card" id="signin-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <img src="Anime_image/Anime_logo.png" alt="AniFlix Logo">
+                    AniFlix
+                </div>
+                <h2 class="auth-title">Sign In</h2>
+                <p class="auth-subtitle">Continue your anime journey</p>
+            </div>
+            
+            <form id="signin-form">
+                <div class="mb-3">
+                    <label for="signin-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="signin-email" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="signin-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="signin-password" placeholder="••••••••" required>
+                </div>
+                
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="remember-me">
+                        <label class="form-check-label" for="remember-me">Remember me</label>
+                    </div>
+                    <a href="#" class="text-decoration-none" style="color: var(--accent-color);">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-auth">Sign In</button>
+                
+                <div class="divider">
+                    <span class="divider-text">OR</span>
+                </div>
+                
+                <div class="social-buttons">
+                    <button type="button" class="btn btn-social btn-google">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn btn-social btn-facebook">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                    <button type="button" class="btn btn-social btn-twitter">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </button>
+                </div>
+                
+                <div class="auth-footer">
+                    New to AniFlix? <a href="#" id="show-signup">Sign up now</a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Sign Up Card (Hidden by default) -->
+        <div class="auth-card" id="signup-card" style="display: none;">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <img src="Anime_image/Anime_logo.png" alt="AniFlix Logo">
+                    AniFlix
+                </div>
+                <h2 class="auth-title">Create Account</h2>
+                <p class="auth-subtitle">Start your anime adventure</p>
+            </div>
+            
+            <form id="signup-form">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="signup-firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="signup-firstname" placeholder="First" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="signup-lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="signup-lastname" placeholder="Last" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="signup-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="signup-email" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="signup-username" class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text">@</span>
+                        <input type="text" class="form-control" id="signup-username" placeholder="username" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="signup-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="signup-password" placeholder="••••••••" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="signup-confirm-password" placeholder="••••••••" required>
+                </div>
+                
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="terms-agree" required>
+                    <label class="form-check-label" for="terms-agree">
+                        I agree to the <a href="#" style="color: var(--accent-color);">Terms of Service</a> and <a href="#" style="color: var(--accent-color);">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-auth">Create Account</button>
+                
+                <div class="divider">
+                    <span class="divider-text">OR</span>
+                </div>
+                
+                <div class="social-buttons">
+                    <button type="button" class="btn btn-social btn-google">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn btn-social btn-facebook">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                    <button type="button" class="btn btn-social btn-twitter">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </button>
+                </div>
+                
+                <div class="auth-footer">
+                    Already have an account? <a href="#" id="show-signin">Sign in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Toggle between Sign In and Sign Up forms
+        document.getElementById('show-signup').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('signin-card').style.display = 'none';
+            document.getElementById('signup-card').style.display = 'block';
+        });
+        
+        document.getElementById('show-signin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('signup-card').style.display = 'none';
+            document.getElementById('signin-card').style.display = 'block';
+        });
+        
+        // Form submission handlers
+        document.getElementById('signin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real app, you would handle the sign in logic here
+            showToast('Sign in successful! Redirecting...');
+            // Simulate redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        });
+        
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real app, you would handle the sign up logic here
+            showToast('Account created successfully! Redirecting...');
+            // Simulate redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        });
+        
+        // Toast Notification
+        function showToast(message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 end-0 p-3';
+            toast.style.zIndex = '1100';
+            
+            const toastInner = document.createElement('div');
+            toastInner.className = 'toast show';
+            toastInner.setAttribute('role', 'alert');
+            toastInner.setAttribute('aria-live', 'assertive');
+            toastInner.setAttribute('aria-atomic', 'true');
+            
+            const toastBody = document.createElement('div');
+            toastBody.className = 'toast-body bg-dark text-white rounded';
+            toastBody.textContent = message;
+            
+            toastInner.appendChild(toastBody);
+            toast.appendChild(toastInner);
+            
+            // Add to DOM
+            document.body.appendChild(toast);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
