@@ -198,8 +198,7 @@
             margin-right: 8px;
             font-size: 1.2rem;
         }
-        
-        /* Auth Footer */
+                /* Auth Footer */
         .auth-footer {
             text-align: center;
             margin-top: 20px;
@@ -391,7 +390,18 @@
         // Form submission handlers
         document.getElementById('signin-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            // In a real app, you would handle the sign in logic here
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+            
+            // Store user data in localStorage
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPassword', password);
+            localStorage.setItem('userLoggedIn', 'true');
+            
+            // Update profile information
+            updateProfileInfo(email);
+            updateProfileInfo(password);
+            
             showToast('Sign in successful! Redirecting...');
             // Simulate redirect after 2 seconds
             setTimeout(() => {
@@ -401,13 +411,41 @@
         
         document.getElementById('signup-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            // In a real app, you would handle the sign up logic here
+            const firstName = document.getElementById('signup-firstname').value;
+            const lastName = document.getElementById('signup-lastname').value;
+            const email = document.getElementById('signup-email').value;
+            const username = document.getElementById('signup-username').value;
+            const password = document.getElementById('signup-password').value;
+            
+            // Store user data in localStorage
+            localStorage.setItem('userFirstName', firstName);
+            localStorage.setItem('userLastName', lastName);
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userUsername', username);
+            localStorage.setItem('userPassword', password);
+            localStorage.setItem('userLoggedIn', 'true');
+            
+            
+            // Update profile information
+            updateProfileInfo(email, firstName, lastName, username, password);
+            
             showToast('Account created successfully! Redirecting...');
             // Simulate redirect after 2 seconds
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 2000);
         });
+        
+        function updateProfileInfo(email, firstName = '', lastName = '', username = '', password = '') {
+            // This function would update the profile information across the site
+            // For now, we'll just store the data in localStorage
+            if (firstName) localStorage.setItem('userFirstName', firstName);
+            if (lastName) localStorage.setItem('userLastName', lastName);
+            if (email) localStorage.setItem('userEmail', email);
+            if (username) localStorage.setItem('userUsername', username);
+            if (password) localStorage.setItem('userPassword', password);
+            
+        }
         
         // Toast Notification
         function showToast(message) {
@@ -436,6 +474,11 @@
             setTimeout(() => {
                 toast.remove();
             }, 3000);
+        }
+        
+        // Check if user is already logged in
+        if (localStorage.getItem('userLoggedIn') === 'true') {
+            window.location.href = 'index.html';
         }
     </script>
 </body>

@@ -291,6 +291,20 @@
             color: var(--light-color);
         }
         
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1100;
+        }
+        
+        .toast {
+            background-color: var(--darker-color);
+            border: 1px solid var(--dark-gray);
+            color: var(--light-color);
+        }
+        
         /* Responsive Styles */
         @media (max-width: 992px) {
             .sidebar {
@@ -335,7 +349,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#profile" class="sidebar-link">
+                <a href="#profile" class="sidebar-link active">
                     <i class="fas fa-user"></i>
                     <span>Profile</span>
                 </a>
@@ -359,7 +373,7 @@
                 </a>
             </li>
             <li class="sidebar-item mt-4">
-                <a href="#" class="sidebar-link text-danger">
+                <a href="#" class="sidebar-link text-danger" id="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
@@ -377,31 +391,32 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-card text-center p-4">
-                            <img src="Anime_image/gallery5.png" alt="Profile Picture" class="profile-pic mb-3">
-                            <h4>@Username</h4>
-                            <p class="text-muted">Anime Enthusiast</p>
-                            <button class="btn btn-primary btn-sm">
+                            <img src="Anime_image/gallery5.png" alt="Profile Picture" class="profile-pic mb-3" id="profile-picture">
+                            <h4 id="profile-username">@Username</h4>
+                            <p class="text-muted" id="profile-email">Anime Enthusiast</p>
+                            <button class="btn btn-primary btn-sm" id="change-photo-btn">
                                 <i class="fas fa-camera me-1"></i> Change Photo
                             </button>
+                            <input type="file" id="profile-picture-upload" accept="image/*" style="display: none;">
                         </div>
                         
                         <div class="stats-card">
                             <h5><i class="fas fa-chart-line me-2"></i> Stats</h5>
                             <div class="stats-item">
                                 <span>Watched</span>
-                                <span class="badge bg-primary rounded-pill">247</span>
+                                <span class="badge bg-primary rounded-pill" id="watched-count">247</span>
                             </div>
                             <div class="stats-item">
                                 <span>Watching</span>
-                                <span class="badge bg-primary rounded-pill">12</span>
+                                <span class="badge bg-primary rounded-pill" id="watching-count">12</span>
                             </div>
                             <div class="stats-item">
                                 <span>Plan to Watch</span>
-                                <span class="badge bg-primary rounded-pill">56</span>
+                                <span class="badge bg-primary rounded-pill" id="plan-to-watch-count">56</span>
                             </div>
                             <div class="stats-item">
                                 <span>Favorites</span>
-                                <span class="badge bg-primary rounded-pill">24</span>
+                                <span class="badge bg-primary rounded-pill" id="favorites-count">24</span>
                             </div>
                         </div>
                     </div>
@@ -410,15 +425,15 @@
                         <div class="profile-card p-4">
                             <h4 class="mb-4">Profile Information</h4>
                             
-                            <form>
+                            <form id="profile-form">
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="firstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" id="firstName" value="Anime">
+                                        <input type="text" class="form-control" id="firstName" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="lastName" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" id="lastName" value="Fan">
+                                        <input type="text" class="form-control" id="lastName" required>
                                     </div>
                                 </div>
                                 
@@ -426,18 +441,18 @@
                                     <label for="username" class="form-label">Username</label>
                                     <div class="input-group">
                                         <span class="input-group-text">@</span>
-                                        <input type="text" class="form-control" id="username" value="Username">
+                                        <input type="text" class="form-control" id="username" required>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" value="user@aniflix.com">
+                                    <input type="email" class="form-control" id="email" required>
                                 </div>
                                 
                                 <div class="mb-3">
                                     <label for="bio" class="form-label">Bio</label>
-                                    <textarea class="form-control" id="bio" rows="3">Passionate anime fan who loves shonen and isekai genres. Currently obsessed with Demon Slayer and Jujutsu Kaisen!</textarea>
+                                    <textarea class="form-control" id="bio" rows="3"></textarea>
                                 </div>
                                 
                                 <div class="mb-3">
@@ -479,261 +494,15 @@
                 </div>
             </div>
             
-            <!-- My List Tab -->
-            <div class="tab-pane" id="mylist">
-                <h2 class="section-title"><i class="fas fa-bookmark me-2"></i> My Anime List</h2>
-                
-                <ul class="nav nav-tabs mb-4" id="myListTabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#watching">Watching (12)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#completed">Completed (247)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#planned">Plan to Watch (56)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#favorites">Favorites (24)</a>
-                    </li>
-                </ul>
-                
-                <div class="tab-content">
-                    <!-- Currently Watching -->
-                    <div class="tab-pane active" id="watching">
-                        <div class="row">
-                            <!-- Anime Item 1 -->
-                            <div class="col-md-6 col-lg-4 col-xl-3">
-                                <div class="anime-card card">
-                                    <img src="https://i.imgur.com/9ZqQY7y.jpg" class="card-img-top" alt="Demon Slayer">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Demon Slayer</h5>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="badge bg-primary">Episode 8/26</span>
-                                            <div class="dropdown">
-                                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-play me-2"></i> Continue Watching</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit Progress</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Add to Favorites</a></li>
-                                                    <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="progress mt-2">
-                                            <div class="progress-bar" style="width: 30%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Anime Item 2 -->
-                            <div class="col-md-6 col-lg-4 col-xl-3">
-                                <div class="anime-card card">
-                                    <img src="https://i.imgur.com/5X6Qy9r.jpg" class="card-img-top" alt="Jujutsu Kaisen">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Jujutsu Kaisen</h5>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="badge bg-primary">Episode 15/24</span>
-                                            <div class="dropdown">
-                                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-play me-2"></i> Continue Watching</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit Progress</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Add to Favorites</a></li>
-                                                    <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="progress mt-2">
-                                            <div class="progress-bar" style="width: 62%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Anime Item 3 -->
-                            <div class="col-md-6 col-lg-4 col-xl-3">
-                                <div class="anime-card card">
-                                    <img src="https://i.imgur.com/7V5WQ9x.jpg" class="card-img-top" alt="Attack on Titan">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Attack on Titan</h5>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="badge bg-primary">Episode 22/25</span>
-                                            <div class="dropdown">
-                                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-play me-2"></i> Continue Watching</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit Progress</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Add to Favorites</a></li>
-                                                    <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="progress mt-2">
-                                            <div class="progress-bar" style="width: 88%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Anime Item 4 -->
-                            <div class="col-md-6 col-lg-4 col-xl-3">
-                                <div class="anime-card card">
-                                    <img src="https://i.imgur.com/3qR8Q9W.jpg" class="card-img-top" alt="Chainsaw Man">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Chainsaw Man</h5>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="badge bg-primary">Episode 5/12</span>
-                                            <div class="dropdown">
-                                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-play me-2"></i> Continue Watching</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit Progress</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Add to Favorites</a></li>
-                                                    <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Remove</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="progress mt-2">
-                                            <div class="progress-bar" style="width: 42%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- Toast Notification Container -->
+            <div class="toast-container">
+                <div class="toast align-items-center text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" id="success-toast">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span id="toast-message">Profile updated successfully!</span>
                         </div>
-                    </div>
-                    
-                    <!-- Completed -->
-                    <div class="tab-pane" id="completed">
-                        <p class="text-center text-muted py-5">Displaying your completed anime (247 titles)</p>
-                    </div>
-                    
-                    <!-- Plan to Watch -->
-                    <div class="tab-pane" id="planned">
-                        <p class="text-center text-muted py-5">Displaying anime in your watchlist (56 titles)</p>
-                    </div>
-                    
-                    <!-- Favorites -->
-                    <div class="tab-pane" id="favorites">
-                        <p class="text-center text-muted py-5">Displaying your favorite anime (24 titles)</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Settings Tab -->
-            <div class="tab-pane" id="settings">
-                <h2 class="section-title"><i class="fas fa-cog me-2"></i> Settings</h2>
-                
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="profile-card mb-4 p-4">
-                            <h4 class="mb-4"><i class="fas fa-user-shield me-2"></i> Account Settings</h4>
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Change Password</label>
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" class="form-control" placeholder="Current Password">
-                                </div>
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                    <input type="password" class="form-control" placeholder="New Password">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                    <input type="password" class="form-control" placeholder="Confirm New Password">
-                                </div>
-                                <button class="btn btn-primary mt-3">Update Password</button>
-                            </div>
-                            
-                            <hr>
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Account Deletion</label>
-                                <p class="small text-muted">Permanently delete your account and all associated data. This action cannot be undone.</p>
-                                <button class="btn btn-outline-danger">Delete My Account</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-6">
-                        <div class="profile-card mb-4 p-4">
-                            <h4 class="mb-4"><i class="fas fa-bell me-2"></i> Notification Preferences</h4>
-                            
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="newReleases" checked>
-                                <label class="form-check-label" for="newReleases">New episode releases</label>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="recommendations" checked>
-                                <label class="form-check-label" for="recommendations">Personalized recommendations</label>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="newsletter">
-                                <label class="form-check-label" for="newsletter">Weekly newsletter</label>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="promotions">
-                                <label class="form-check-label" for="promotions">Special promotions</label>
-                            </div>
-                            
-                            <button class="btn btn-primary">Save Preferences</button>
-                        </div>
-                        
-                        <div class="profile-card p-4">
-                            <h4 class="mb-4"><i class="fas fa-palette me-2"></i> Appearance</h4>
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Theme</label>
-                                <div class="d-flex flex-wrap gap-3">
-                                    <div class="theme-option" data-theme="dark">
-                                        <div class="theme-preview" style="background: #0F0A2E; border: 2px solid #5E3AE3;"></div>
-                                        <span>Dark</span>
-                                    </div>
-                                    <div class="theme-option" data-theme="light">
-                                        <div class="theme-preview" style="background: #f8f9fa; border: 2px solid #dee2e6;"></div>
-                                        <span>Light</span>
-                                    </div>
-                                    <div class="theme-option" data-theme="purple">
-                                        <div class="theme-preview" style="background: #1A1350; border: 2px solid #FF4EC5;"></div>
-                                        <span>Purple</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Video Player</label>
-                                <select class="form-select">
-                                    <option>Default Player</option>
-                                    <option>HTML5 Player</option>
-                                    <option>External Player</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="autoPlay" checked>
-                                <label class="form-check-label" for="autoPlay">Auto-play next episode</label>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="skipIntro">
-                                <label class="form-check-label" for="skipIntro">Skip intros automatically</label>
-                            </div>
-                            
-                            <button class="btn btn-primary">Save Settings</button>
-                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                 </div>
             </div>
@@ -742,92 +511,165 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Theme switching functionality
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.addEventListener('click', function() {
-                const theme = this.getAttribute('data-theme');
-                // Remove active state from all options
-                document.querySelectorAll('.theme-preview').forEach(preview => {
-                    preview.style.border = '2px solid transparent';
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (localStorage.getItem('userLoggedIn') !== 'true') {
+                window.location.href = 'sign_in-sign_up.html';
+                return;
+            }
+
+            // Load user data from localStorage
+            const userData = {
+                firstName: localStorage.getItem('userFirstName') || 'Anime',
+                lastName: localStorage.getItem('userLastName') || 'Fan',
+                username: localStorage.getItem('userUsername') || 'username',
+                email: localStorage.getItem('userEmail') || 'user@aniflix.com',
+                bio: localStorage.getItem('userBio') || 'Passionate anime fan who loves shonen and isekai genres. Currently obsessed with Demon Slayer and Jujutsu Kaisen!',
+                profilePic: localStorage.getItem('userProfilePic') || 'Anime_image/gallery5.png',
+                watchedCount: localStorage.getItem('watchedCount') || 247,
+                watchingCount: localStorage.getItem('watchingCount') || 12,
+                planToWatchCount: localStorage.getItem('planToWatchCount') || 56,
+                favoritesCount: localStorage.getItem('favoritesCount') || 24,
+                favoriteGenres: JSON.parse(localStorage.getItem('favoriteGenres')) || ['action', 'adventure', 'fantasy']
+            };
+
+            // Populate profile information
+            document.getElementById('firstName').value = userData.firstName;
+            document.getElementById('lastName').value = userData.lastName;
+            document.getElementById('username').value = userData.username;
+            document.getElementById('email').value = userData.email;
+            document.getElementById('bio').value = userData.bio;
+            document.getElementById('profile-username').textContent = `@${userData.username}`;
+            document.getElementById('profile-email').textContent = userData.email;
+            document.getElementById('profile-picture').src = userData.profilePic;
+            document.getElementById('watched-count').textContent = userData.watchedCount;
+            document.getElementById('watching-count').textContent = userData.watchingCount;
+            document.getElementById('plan-to-watch-count').textContent = userData.planToWatchCount;
+            document.getElementById('favorites-count').textContent = userData.favoritesCount;
+
+            // Set favorite genres checkboxes
+            userData.favoriteGenres.forEach(genre => {
+                const checkbox = document.getElementById(genre);
+                if (checkbox) checkbox.checked = true;
+            });
+
+            // Initialize toast
+            const toast = new bootstrap.Toast(document.getElementById('success-toast'));
+
+            // Profile form submission
+            document.getElementById('profile-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const bio = document.getElementById('bio').value;
+                
+                // Get favorite genres
+                const favoriteGenres = [];
+                document.querySelectorAll('.form-check-input:checked').forEach(checkbox => {
+                    favoriteGenres.push(checkbox.id);
                 });
-                // Add active state to selected option
-                this.querySelector('.theme-preview').style.border = '2px solid var(--accent-color)';
-                // In a real app, you would change the theme here
-                showToast(`Theme changed to ${theme}`);
+
+                // Update localStorage
+                localStorage.setItem('userFirstName', firstName);
+                localStorage.setItem('userLastName', lastName);
+                localStorage.setItem('userUsername', username);
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userBio', bio);
+                localStorage.setItem('favoriteGenres', JSON.stringify(favoriteGenres));
+
+                // Update displayed information
+                document.getElementById('profile-username').textContent = `@${username}`;
+                document.getElementById('profile-email').textContent = email;
+
+                // Show success message
+                document.getElementById('toast-message').textContent = 'Profile updated successfully!';
+                toast.show();
+
+                // Notify other pages of the change
+                notifyProfileUpdate({
+                    username: username,
+                    email: email
+                });
+            });
+
+            // Change profile picture
+            document.getElementById('change-photo-btn').addEventListener('click', function() {
+                document.getElementById('profile-picture-upload').click();
+            });
+
+            document.getElementById('profile-picture-upload').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const newProfilePic = event.target.result;
+                        document.getElementById('profile-picture').src = newProfilePic;
+                        localStorage.setItem('userProfilePic', newProfilePic);
+                        
+                        // Show success message
+                        document.getElementById('toast-message').textContent = 'Profile picture updated!';
+                        toast.show();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('userLoggedIn');
+                window.location.href = 'sign_in-sign_up.html';
+            });
+
+            // Notify other pages of profile updates
+            function notifyProfileUpdate(data) {
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'profileUpdate',
+                        data: data
+                    }, '*');
+                }
+                
+                // Broadcast to other tabs
+                localStorage.setItem('profileUpdate', JSON.stringify({
+                    timestamp: new Date().getTime(),
+                    data: data
+                }));
+            }
+
+            // Listen for profile updates from other tabs
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'profileUpdate') {
+                    const update = JSON.parse(event.newValue);
+                    if (update && update.data.username) {
+                        document.getElementById('username').value = update.data.username;
+                        document.getElementById('profile-username').textContent = `@${update.data.username}`;
+                    }
+                    if (update && update.data.email) {
+                        document.getElementById('email').value = update.data.email;
+                        document.getElementById('profile-email').textContent = update.data.email;
+                    }
+                }
+            });
+
+            // Listen for profile updates from other windows
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'profileUpdate') {
+                    if (event.data.data.username) {
+                        document.getElementById('username').value = event.data.data.username;
+                        document.getElementById('profile-username').textContent = `@${event.data.data.username}`;
+                    }
+                    if (event.data.data.email) {
+                        document.getElementById('email').value = event.data.data.email;
+                        document.getElementById('profile-email').textContent = event.data.data.email;
+                    }
+                }
             });
         });
-        
-        // List Tabs Functionality
-        document.querySelectorAll('.list-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.list-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                
-                const filterValue = this.textContent.toLowerCase().replace(/\s+/g, '-');
-                const animeCards = document.querySelectorAll('.anime-card');
-                
-                animeCards.forEach(card => {
-                    // In a real app, you would have data attributes for each anime's status
-                    // For this demo, we'll just show/hide based on favorites
-                    if (filterValue === 'all') {
-                        card.closest('.col-md-6').style.display = 'block';
-                    } 
-                    else if (filterValue === 'favorites') {
-                        const animeId = card.querySelector('.favorite-btn').getAttribute('data-anime-id');
-                        if (isFavorited(animeId)) {
-                            card.closest('.col-md-6').style.display = 'block';
-                        } else {
-                            card.closest('.col-md-6').style.display = 'none';
-                        }
-                    }
-                    else {
-                        // For other filters, you would check the anime's status
-                        // This is just a placeholder - implement your actual filtering logic
-                        card.closest('.col-md-6').style.display = 'none';
-                    }
-                });
-                
-                showToast(`Showing ${this.textContent} list`);
-            });
-        });
-        
-        function isFavorited(animeId) {
-            // In a real app, you would check against user's favorites
-            // This is just a demo - return true for some IDs
-            return [1, 3, 7, 10, 11, 5].includes(parseInt(animeId));
-        }
-        
-        // Toast Notification
-        function showToast(message) {
-            // Create toast element
-            const toast = document.createElement('div');
-            toast.className = 'position-fixed bottom-0 end-0 p-3';
-            toast.style.zIndex = '1100';
-            
-            const toastInner = document.createElement('div');
-            toastInner.className = 'toast show';
-            toastInner.setAttribute('role', 'alert');
-            toastInner.setAttribute('aria-live', 'assertive');
-            toastInner.setAttribute('aria-atomic', 'true');
-            
-            const toastBody = document.createElement('div');
-            toastBody.className = 'toast-body bg-dark text-white rounded';
-            toastBody.textContent = message;
-            
-            toastInner.appendChild(toastBody);
-            toast.appendChild(toastInner);
-            
-            // Add to DOM
-            document.body.appendChild(toast);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-        
-        // Initialize the first theme as active
-        document.querySelector('.theme-option[data-theme="dark"] .theme-preview').style.border = '2px solid var(--accent-color)';
     </script>
 </body>
 </html>

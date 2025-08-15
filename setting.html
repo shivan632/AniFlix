@@ -214,6 +214,20 @@
             border: 2px solid var(--accent-color);
         }
         
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1100;
+        }
+        
+        .toast {
+            background-color: var(--darker-color);
+            border: 1px solid var(--dark-gray);
+            color: var(--light-color);
+        }
+        
         /* Responsive Styles */
         @media (max-width: 992px) {
             .sidebar {
@@ -301,7 +315,7 @@
                 </a>
             </li>
             <li class="sidebar-item mt-4">
-                <a href="#" class="sidebar-link">
+                <a href="#" class="sidebar-link" id="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
@@ -319,44 +333,50 @@
                 <div class="settings-card">
                     <h4><i class="fas fa-user-shield me-2"></i> Account Settings</h4>
                     
-                    <div class="mb-4">
-                        <label class="form-label">Change Username</label>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">@</span>
-                            <input type="text" class="form-control" value="animefan123">
+                    <form id="account-settings-form">
+                        <div class="mb-4">
+                            <label class="form-label">Change Username</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">@</span>
+                                <input type="text" class="form-control" id="username" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Username</button>
                         </div>
-                        <button class="btn btn-primary">Update Username</button>
-                    </div>
+                    </form>
                     
-                    <div class="mb-4">
-                        <label class="form-label">Change Email</label>
-                        <input type="email" class="form-control mb-3" value="user@aniflix.com">
-                        <button class="btn btn-primary">Update Email</button>
-                    </div>
+                    <form id="email-settings-form">
+                        <div class="mb-4">
+                            <label class="form-label">Change Email</label>
+                            <input type="email" class="form-control mb-3" id="email" required>
+                            <button type="submit" class="btn btn-primary">Update Email</button>
+                        </div>
+                    </form>
                     
-                    <div class="mb-3">
-                        <label class="form-label">Change Password</label>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" class="form-control" placeholder="Current Password">
+                    <form id="password-settings-form">
+                        <div class="mb-3">
+                            <label class="form-label">Change Password</label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="current-password" placeholder="Current Password" required>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                <input type="password" class="form-control" id="new-password" placeholder="New Password" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                <input type="password" class="form-control" id="confirm-password" placeholder="Confirm New Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
                         </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            <input type="password" class="form-control" placeholder="New Password">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            <input type="password" class="form-control" placeholder="Confirm New Password">
-                        </div>
-                        <button class="btn btn-primary">Update Password</button>
-                    </div>
+                    </form>
                     
                     <hr>
                     
                     <div>
                         <label class="form-label">Account Deletion</label>
                         <p class="small text-muted">Permanently delete your account and all associated data. This action cannot be undone.</p>
-                        <button class="btn btn-outline-danger">Delete My Account</button>
+                        <button class="btn btn-outline-danger" id="delete-account-btn">Delete My Account</button>
                     </div>
                 </div>
                 
@@ -364,27 +384,29 @@
                 <div class="settings-card">
                     <h4><i class="fas fa-user-secret me-2"></i> Privacy Settings</h4>
                     
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="profileVisibility" checked>
-                        <label class="form-check-label" for="profileVisibility">Make profile public</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="activityVisibility" checked>
-                        <label class="form-check-label" for="activityVisibility">Show watch activity</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="listVisibility">
-                        <label class="form-check-label" for="listVisibility">Make anime list public</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="recommendationsVisibility" checked>
-                        <label class="form-check-label" for="recommendationsVisibility">Allow personalized recommendations</label>
-                    </div>
-                    
-                    <button class="btn btn-primary">Save Privacy Settings</button>
+                    <form id="privacy-settings-form">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="profileVisibility">
+                            <label class="form-check-label" for="profileVisibility">Make profile public</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="activityVisibility">
+                            <label class="form-check-label" for="activityVisibility">Show watch activity</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="listVisibility">
+                            <label class="form-check-label" for="listVisibility">Make anime list public</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="recommendationsVisibility">
+                            <label class="form-check-label" for="recommendationsVisibility">Allow personalized recommendations</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Privacy Settings</button>
+                    </form>
                 </div>
             </div>
             
@@ -393,122 +415,142 @@
                 <div class="settings-card">
                     <h4><i class="fas fa-bell me-2"></i> Notification Preferences</h4>
                     
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="newReleases" checked>
-                        <label class="form-check-label" for="newReleases">New episode releases</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="recommendations" checked>
-                        <label class="form-check-label" for="recommendations">Personalized recommendations</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="newsletter">
-                        <label class="form-check-label" for="newsletter">Weekly newsletter</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="promotions">
-                        <label class="form-check-label" for="promotions">Special promotions</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="systemUpdates" checked>
-                        <label class="form-check-label" for="systemUpdates">System updates</label>
-                    </div>
-                    
-                    <button class="btn btn-primary">Save Notification Settings</button>
+                    <form id="notification-settings-form">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="newReleases">
+                            <label class="form-check-label" for="newReleases">New episode releases</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="recommendations">
+                            <label class="form-check-label" for="recommendations">Personalized recommendations</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="newsletter">
+                            <label class="form-check-label" for="newsletter">Weekly newsletter</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="promotions">
+                            <label class="form-check-label" for="promotions">Special promotions</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="systemUpdates">
+                            <label class="form-check-label" for="systemUpdates">System updates</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Notification Settings</button>
+                    </form>
                 </div>
                 
                 <!-- Appearance Settings -->
                 <div class="settings-card">
                     <h4><i class="fas fa-palette me-2"></i> Appearance</h4>
                     
-                    <div class="mb-4">
-                        <label class="form-label">Theme</label>
-                        <div class="theme-options">
-                            <div class="theme-option active">
-                                <div class="theme-preview" style="background: linear-gradient(to right, #1A1350, #0a0a0a);"></div>
-                                <span>Dark</span>
+                    <form id="appearance-settings-form">
+                        <div class="mb-4">
+                            <label class="form-label">Theme</label>
+                            <div class="theme-options">
+                                <div class="theme-option" data-theme="dark">
+                                    <div class="theme-preview" style="background: linear-gradient(to right, #1A1350, #0a0a0a);"></div>
+                                    <span>Dark</span>
+                                </div>
+                                <div class="theme-option" data-theme="light">
+                                    <div class="theme-preview" style="background: linear-gradient(to right, #f8f9fa, #e0e0e0);"></div>
+                                    <span>Light</span>
+                                </div>
+                                <div class="theme-option" data-theme="purple">
+                                    <div class="theme-preview" style="background: linear-gradient(to right, #1A1350, #5E3AE3);"></div>
+                                    <span>Purple</span>
+                                </div>
+                                <div class="theme-option" data-theme="red">
+                                    <div class="theme-preview" style="background: linear-gradient(to right, #0a0a0a, #e50914);"></div>
+                                    <span>Red</span>
+                                </div>
                             </div>
-                            <div class="theme-option">
-                                <div class="theme-preview" style="background: linear-gradient(to right, #f8f9fa, #e0e0e0);"></div>
-                                <span>Light</span>
-                            </div>
-                            <div class="theme-option">
-                                <div class="theme-preview" style="background: linear-gradient(to right, #1A1350, #5E3AE3);"></div>
-                                <span>Purple</span>
-                            </div>
-                            <div class="theme-option">
-                                <div class="theme-preview" style="background: linear-gradient(to right, #0a0a0a, #e50914);"></div>
-                                <span>Red</span>
-                            </div>
+                            <input type="hidden" id="selected-theme" name="theme">
                         </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label class="form-label">Video Player</label>
-                        <select class="form-select mb-3">
-                            <option>Default Player</option>
-                            <option>HTML5 Player</option>
-                            <option>External Player</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="autoPlay" checked>
-                        <label class="form-check-label" for="autoPlay">Auto-play next episode</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="skipIntro" checked>
-                        <label class="form-check-label" for="skipIntro">Skip intros automatically</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="darkMode" checked>
-                        <label class="form-check-label" for="darkMode">Dark mode</label>
-                    </div>
-                    
-                    <button class="btn btn-primary">Save Appearance Settings</button>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Video Player</label>
+                            <select class="form-select mb-3" id="video-player">
+                                <option value="default">Default Player</option>
+                                <option value="html5">HTML5 Player</option>
+                                <option value="external">External Player</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="autoPlay">
+                            <label class="form-check-label" for="autoPlay">Auto-play next episode</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="skipIntro">
+                            <label class="form-check-label" for="skipIntro">Skip intros automatically</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="darkMode">
+                            <label class="form-check-label" for="darkMode">Dark mode</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Appearance Settings</button>
+                    </form>
                 </div>
                 
                 <!-- Playback Settings -->
                 <div class="settings-card">
                     <h4><i class="fas fa-play-circle me-2"></i> Playback Settings</h4>
                     
-                    <div class="mb-3">
-                        <label class="form-label">Default Video Quality</label>
-                        <select class="form-select mb-3">
-                            <option>Auto (Recommended)</option>
-                            <option>1080p</option>
-                            <option>720p</option>
-                            <option>480p</option>
-                        </select>
+                    <form id="playback-settings-form">
+                        <div class="mb-3">
+                            <label class="form-label">Default Video Quality</label>
+                            <select class="form-select mb-3" id="video-quality">
+                                <option value="auto">Auto (Recommended)</option>
+                                <option value="1080p">1080p</option>
+                                <option value="720p">720p</option>
+                                <option value="480p">480p</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Default Subtitle Language</label>
+                            <select class="form-select mb-3" id="subtitle-language">
+                                <option value="english">English</option>
+                                <option value="japanese">Japanese</option>
+                                <option value="spanish">Spanish</option>
+                                <option value="french">French</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="autoQuality">
+                            <label class="form-check-label" for="autoQuality">Auto adjust quality based on connection</label>
+                        </div>
+                        
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="rememberPosition">
+                            <label class="form-check-label" for="rememberPosition">Remember playback position</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Playback Settings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toast Notification -->
+        <div class="toast-container">
+            <div class="toast align-items-center text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" id="success-toast">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <span id="toast-message">Settings saved successfully!</span>
                     </div>
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Default Subtitle Language</label>
-                        <select class="form-select mb-3">
-                            <option>English</option>
-                            <option>Japanese</option>
-                            <option>Spanish</option>
-                            <option>French</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="autoQuality" checked>
-                        <label class="form-check-label" for="autoQuality">Auto adjust quality based on connection</label>
-                    </div>
-                    
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="rememberPosition" checked>
-                        <label class="form-check-label" for="rememberPosition">Remember playback position</label>
-                    </div>
-                    
-                    <button class="btn btn-primary">Save Playback Settings</button>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
         </div>
@@ -519,58 +561,230 @@
     
     <!-- Custom JS -->
     <script>
-        // Theme switching functionality
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove active class from all options
-                document.querySelectorAll('.theme-option').forEach(opt => {
-                    opt.classList.remove('active');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (localStorage.getItem('userLoggedIn') !== 'true') {
+                window.location.href = 'sign_in-sign_up.html';
+                return;
+            }
+
+            // Initialize toast
+            const toast = new bootstrap.Toast(document.getElementById('success-toast'));
+
+            // Load saved settings
+            loadSettings();
+
+            // Theme selection
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.theme-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    document.getElementById('selected-theme').value = this.dataset.theme;
                 });
+            });
+
+            // Form submissions
+            document.getElementById('account-settings-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                localStorage.setItem('userUsername', username);
+                showToast('Username updated successfully!');
                 
-                // Add active class to clicked option
-                this.classList.add('active');
+                // Notify other pages of the change
+                notifyProfileUpdate({ username: username });
+            });
+
+            document.getElementById('email-settings-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                localStorage.setItem('userEmail', email);
+                showToast('Email updated successfully!');
                 
-                // Get the selected theme
-                const theme = this.querySelector('span').textContent.toLowerCase();
+                // Notify other pages of the change
+                notifyProfileUpdate({ email: email });
+            });
+
+            document.getElementById('privacy-settings-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const privacySettings = {
+                    profilePublic: document.getElementById('profileVisibility').checked,
+                    activityVisible: document.getElementById('activityVisibility').checked,
+                    listPublic: document.getElementById('listVisibility').checked,
+                    recommendations: document.getElementById('recommendationsVisibility').checked
+                };
+                localStorage.setItem('privacySettings', JSON.stringify(privacySettings));
+                showToast('Privacy settings updated!');
+            });
+
+            document.getElementById('notification-settings-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const notificationSettings = {
+                    newReleases: document.getElementById('newReleases').checked,
+                    recommendations: document.getElementById('recommendations').checked,
+                    newsletter: document.getElementById('newsletter').checked,
+                    promotions: document.getElementById('promotions').checked,
+                    systemUpdates: document.getElementById('systemUpdates').checked
+                };
+                localStorage.setItem('notificationSettings', JSON.stringify(notificationSettings));
+                showToast('Notification settings updated!');
+            });
+
+            document.getElementById('appearance-settings-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const appearanceSettings = {
+                    theme: document.getElementById('selected-theme').value,
+                    player: document.getElementById('video-player').value,
+                    autoPlay: document.getElementById('autoPlay').checked,
+                    skipIntro: document.getElementById('skipIntro').checked,
+                    darkMode: document.getElementById('darkMode').checked
+                };
+                localStorage.setItem('appearanceSettings', JSON.stringify(appearanceSettings));
+                showToast('Appearance settings updated!');
                 
-                // In a real app, you would change the theme here
-                showToast(`Theme changed to ${theme}`);
+                // Apply theme immediately
+                applyTheme(appearanceSettings.theme);
+            });
+
+            document.getElementById('playback-settings-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const playbackSettings = {
+                    videoQuality: document.getElementById('video-quality').value,
+                    subtitleLanguage: document.getElementById('subtitle-language').value,
+                    autoQuality: document.getElementById('autoQuality').checked,
+                    rememberPosition: document.getElementById('rememberPosition').checked
+                };
+                localStorage.setItem('playbackSettings', JSON.stringify(playbackSettings));
+                showToast('Playback settings updated!');
+            });
+
+            // Delete account
+            document.getElementById('delete-account-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                    // Clear all user data
+                    localStorage.clear();
+                    window.location.href = 'sign_in-sign_up.html';
+                }
+            });
+
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('userLoggedIn');
+                window.location.href = 'sign_in-sign_up.html';
+            });
+
+            // Load settings from localStorage
+            function loadSettings() {
+                // Account settings
+                const username = localStorage.getItem('userUsername') || 'animefan123';
+                const email = localStorage.getItem('userEmail') || 'user@aniflix.com';
+                
+                document.getElementById('username').value = username;
+                document.getElementById('email').value = email;
+
+                // Privacy settings
+                const privacySettings = JSON.parse(localStorage.getItem('privacySettings')) || {
+                    profilePublic: true,
+                    activityVisible: true,
+                    listPublic: false,
+                    recommendations: true
+                };
+                
+                document.getElementById('profileVisibility').checked = privacySettings.profilePublic;
+                document.getElementById('activityVisibility').checked = privacySettings.activityVisible;
+                document.getElementById('listVisibility').checked = privacySettings.listPublic;
+                document.getElementById('recommendationsVisibility').checked = privacySettings.recommendations;
+
+                // Notification settings
+                const notificationSettings = JSON.parse(localStorage.getItem('notificationSettings')) || {
+                    newReleases: true,
+                    recommendations: true,
+                    newsletter: false,
+                    promotions: false,
+                    systemUpdates: true
+                };
+                
+                document.getElementById('newReleases').checked = notificationSettings.newReleases;
+                document.getElementById('recommendations').checked = notificationSettings.recommendations;
+                document.getElementById('newsletter').checked = notificationSettings.newsletter;
+                document.getElementById('promotions').checked = notificationSettings.promotions;
+                document.getElementById('systemUpdates').checked = notificationSettings.systemUpdates;
+
+                // Appearance settings
+                const appearanceSettings = JSON.parse(localStorage.getItem('appearanceSettings')) || {
+                    theme: 'dark',
+                    player: 'default',
+                    autoPlay: true,
+                    skipIntro: true,
+                    darkMode: true
+                };
+                
+                // Set active theme
+                document.querySelector(`.theme-option[data-theme="${appearanceSettings.theme}"]`).classList.add('active');
+                document.getElementById('selected-theme').value = appearanceSettings.theme;
+                
+                document.getElementById('video-player').value = appearanceSettings.player;
+                document.getElementById('autoPlay').checked = appearanceSettings.autoPlay;
+                document.getElementById('skipIntro').checked = appearanceSettings.skipIntro;
+                document.getElementById('darkMode').checked = appearanceSettings.darkMode;
+
+                // Playback settings
+                const playbackSettings = JSON.parse(localStorage.getItem('playbackSettings')) || {
+                    videoQuality: 'auto',
+                    subtitleLanguage: 'english',
+                    autoQuality: true,
+                    rememberPosition: true
+                };
+                
+                document.getElementById('video-quality').value = playbackSettings.videoQuality;
+                document.getElementById('subtitle-language').value = playbackSettings.subtitleLanguage;
+                document.getElementById('autoQuality').checked = playbackSettings.autoQuality;
+                document.getElementById('rememberPosition').checked = playbackSettings.rememberPosition;
+            }
+
+            // Apply theme to the page
+            function applyTheme(theme) {
+                document.body.className = ''; // Reset all classes
+                document.body.classList.add(theme + '-theme');
+            }
+
+            // Show toast notification
+            function showToast(message) {
+                document.getElementById('toast-message').textContent = message;
+                toast.show();
+            }
+
+            // Notify other pages of profile updates
+            function notifyProfileUpdate(data) {
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'profileUpdate',
+                        data: data
+                    }, '*');
+                }
+                
+                // Broadcast to other tabs
+                localStorage.setItem('profileUpdate', JSON.stringify({
+                    timestamp: new Date().getTime(),
+                    data: data
+                }));
+            }
+
+            // Listen for profile updates from other tabs
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'profileUpdate') {
+                    const update = JSON.parse(event.newValue);
+                    if (update && update.data.username) {
+                        document.getElementById('username').value = update.data.username;
+                    }
+                    if (update && update.data.email) {
+                        document.getElementById('email').value = update.data.email;
+                    }
+                }
             });
         });
-        
-        // Sidebar Toggle for Mobile
-        document.querySelector('.sidebar-toggle')?.addEventListener('click', function() {
-            document.querySelector('.sidebar').classList.toggle('active');
-        });
-        
-        // Toast Notification
-        function showToast(message) {
-            // Create toast element
-            const toast = document.createElement('div');
-            toast.className = 'position-fixed bottom-0 end-0 p-3';
-            toast.style.zIndex = '1100';
-            
-            const toastInner = document.createElement('div');
-            toastInner.className = 'toast show';
-            toastInner.setAttribute('role', 'alert');
-            toastInner.setAttribute('aria-live', 'assertive');
-            toastInner.setAttribute('aria-atomic', 'true');
-            
-            const toastBody = document.createElement('div');
-            toastBody.className = 'toast-body bg-dark text-white rounded';
-            toastBody.textContent = message;
-            
-            toastInner.appendChild(toastBody);
-            toast.appendChild(toastInner);
-            
-            // Add to DOM
-            document.body.appendChild(toast);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
     </script>
 </body>
 </html>
