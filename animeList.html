@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AniMax - Premium Anime Streaming</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --primary-dark: #c40812;
+            --dark-color: #141414;
+            --darker-color: #0a0a0a;
+            --light-color: #f4f4f4;
+            --gray-color: #aaa;
+            --dark-gray: #333;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            overflow-x: hidden;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.95) !important;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+        
+        .nav-link {
+            color: var(--light-color) !important;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px !important;
+            border-radius: 8px;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+            background-color: rgba(229, 9, 20, 0.1);
+        }
+        
+        /* Section Titles */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            color: var(--light-color);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        /* Anime Cards */
+        .anime-card {
+            background-color: var(--darker-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .anime-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .anime-card .card-img-top {
+            height: 300px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .anime-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        
+        .anime-card .card-body {
+            padding: 20px;
+        }
+        
+        .anime-card .card-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+        
+        .anime-card .card-text {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-meta span {
+            display: flex;
+            align-items: center;
+            color: var(--gray-color);
+        }
+        
+        .card-meta i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        
+        .watch-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .watch-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Favorite Button */
+        .favorite-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .favorite-btn:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .favorite-btn.favorited {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* List Tabs */
+        .list-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .list-tab {
+            background-color: var(--darker-color);
+            color: var(--light-color);
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .list-tab:hover {
+            background-color: rgba(229, 9, 20, 0.2);
+            color: var(--primary-color);
+        }
+        
+        .list-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Modal Styles */
+        .anime-modal .modal-content {
+            background-color: var(--darker-color);
+            color: var(--light-color);
+            border-radius: 10px;
+            border: 1px solid var(--dark-gray);
+        }
+        
+        .anime-modal .modal-header {
+            border-bottom: 1px solid var(--dark-gray);
+        }
+        
+        .anime-modal .modal-title {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .anime-modal .btn-close {
+            filter: invert(1);
+            opacity: 0.8;
+        }
+        
+        .anime-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 992px) {
+            .anime-details {
+                flex-direction: row;
+            }
+        }
+        
+        .anime-poster {
+            flex: 0 0 300px;
+            margin-right: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .anime-poster img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .anime-info {
+            flex: 1;
+        }
+        
+        .anime-info h2 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--light-color);
+        }
+        
+        .anime-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .anime-meta span {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        .anime-meta i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        
+        .anime-description {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .anime-genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .genre-badge {
+            background-color: rgba(229, 9, 20, 0.2);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .episodes-container {
+            margin-top: 2rem;
+        }
+        
+        .episodes-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--light-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .episodes-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .season-selector {
+            margin-bottom: 1.5rem;
+        }
+        
+        .season-btn {
+            background-color: var(--darker-color);
+            color: var(--light-color);
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .season-btn:hover {
+            background-color: rgba(229, 9, 20, 0.2);
+            color: var(--primary-color);
+        }
+        
+        .season-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .episode-card {
+            background-color: var(--darker-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--dark-gray);
+        }
+        
+        .episode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-color);
+        }
+        
+        .episode-thumbnail {
+            position: relative;
+            height: 140px;
+            overflow: hidden;
+        }
+        
+        .episode-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .episode-card:hover .episode-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .episode-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--light-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .episode-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--light-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .episode-info {
+            padding: 1rem;
+        }
+        
+        .episode-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--light-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .episode-description {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .episode-date {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+        }
+        
+        .watch-episode-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .watch-episode-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Video Player */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            background-color: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .anime-card .card-img-top {
+                height: 250px;
+            }
+            
+            .anime-poster {
+                flex: 0 0 100%;
+                margin-right: 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .anime-card .card-img-top {
+                height: 200px;
+            }
+            
+            .episodes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">AniMax</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Anime_profile/profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Anime_profile/setting.html">Setting</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- My List Section -->
+    <section class="my-list-container py-5" id="my-list">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title">My List</h2>
+            </div>
+            
+            <div class="list-tabs">
+                <button class="list-tab active">All</button>
+                <button class="list-tab">Currently Watching</button>
+                <button class="list-tab">Plan to Watch</button>
+                <button class="list-tab">Completed</button>
+                <button class="list-tab">Favorites</button>
+            </div>
+            
+            <div class="row">
+                <!-- Anime Card 1 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="1">
+                        <button class="favorite-btn favorited" data-anime-id="1"><i class="fas fa-heart"></i></button>
+                        <img src="Anime_image/animeBackground1.png" class="card-img-top" alt="Demon Slayer">
+                        <div class="card-body">
+                            <h5 class="card-title">Demon Slayer</h5>
+                            <p class="card-text">Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.7</span>
+                                <span><i class="fas fa-tv"></i> 26</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 2 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="2">
+                        <button class="favorite-btn" data-anime-id="2"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/gallery2.png" class="card-img-top" alt="Attack on Titan">
+                        <div class="card-body">
+                            <h5 class="card-title">Attack on Titan</h5>
+                            <p class="card-text">After his hometown is destroyed and his mother is killed, young Eren Jaeger vows to cleanse the earth of the giant humanoid Titans...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 9.0</span>
+                                <span><i class="fas fa-tv"></i> 75+</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 3 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="3">
+                        <button class="favorite-btn favorited" data-anime-id="3"><i class="fas fa-heart"></i></button>
+                        <img src="Anime_image/gallery3.png" class="card-img-top" alt="Jujutsu Kaisen">
+                        <div class="card-body">
+                            <h5 class="card-title">Jujutsu Kaisen</h5>
+                            <p class="card-text">Yuuji Itadori, a boy with tremendous physical strength, gains cursed energy after eating a finger of Ryomen Sukuna...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.8</span>
+                                <span><i class="fas fa-tv"></i> 24</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 4 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="4">
+                        <button class="favorite-btn" data-anime-id="4"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/gallery4.png" class="card-img-top" alt="My Hero Academia">
+                        <div class="card-body">
+                            <h5 class="card-title">My Hero Academia</h5>
+                            <p class="card-text">In a world where people with superpowers (Quirks) are the norm, Izuku Midoriya dreams of becoming a hero despite being born without a Quirk...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.4</span>
+                                <span><i class="fas fa-tv"></i> 113+</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anime Card 5 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="5">
+                        <button class="favorite-btn" data-anime-id="5"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/image6.png" class="card-img-top" alt="One Piece">
+                        <div class="card-body">
+                            <h5 class="card-title">One Piece</h5>
+                            <p class="card-text">Monkey D. Luffy sets off on an adventure with his pirate crew in search of the world's ultimate treasure, the One Piece...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.7</span>
+                                <span><i class="fas fa-tv"></i> 1000+</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 6 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="6">
+                        <button class="favorite-btn" data-anime-id="6"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/image7.png" class="card-img-top" alt="Naruto Shippuden">
+                        <div class="card-body">
+                            <h5 class="card-title">Naruto Shippuden</h5>
+                            <p class="card-text">Naruto Uzumaki, now a teenager, continues his quest to become Hokage while facing new threats and challenges...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.7</span>
+                                <span><i class="fas fa-tv"></i> 500</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 7 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="7">
+                        <button class="favorite-btn favorited" data-anime-id="7"><i class="fas fa-heart"></i></button>
+                        <img src="Anime_image/image8.png" class="card-img-top" alt="Death Note">
+                        <div class="card-body">
+                            <h5 class="card-title">Death Note</h5>
+                            <p class="card-text">Light Yagami finds a mysterious notebook that grants him the power to kill anyone whose name he writes in it...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 9.0</span>
+                                <span><i class="fas fa-tv"></i> 37</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 8 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="8">
+                        <button class="favorite-btn" data-anime-id="8"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/gallery8.png" class="card-img-top" alt="Tokyo Revengers">
+                        <div class="card-body">
+                            <h5 class="card-title">Tokyo Revengers</h5>
+                            <p class="card-text">Takemichi Hanagaki discovers he can time-leap to his middle school years and tries to save his ex-girlfriend from a tragic fate...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.1</span>
+                                <span><i class="fas fa-tv"></i> 24</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 9 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="9">
+                        <button class="favorite-btn" data-anime-id="9"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/image10.png" class="card-img-top" alt="Chainsaw Man">
+                        <div class="card-body">
+                            <h5 class="card-title">Chainsaw Man</h5>
+                            <p class="card-text">Denji is a young man who will do anything for money, even hunting down devils with his pet devil Pochita...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.6</span>
+                                <span><i class="fas fa-tv"></i> 12</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 10 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="10">
+                        <button class="favorite-btn favorited" data-anime-id="10"><i class="fas fa-heart"></i></button>
+                        <img src="Anime_image/image11.png" class="card-img-top" alt="Spy x Family">
+                        <div class="card-body">
+                            <h5 class="card-title">Spy x Family</h5>
+                            <p class="card-text">A spy, an assassin, and a telepath form a fake family to maintain their covers, not realizing each other's true identities...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.5</span>
+                                <span><i class="fas fa-tv"></i> 25</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 11 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="11">
+                        <button class="favorite-btn" data-anime-id="11"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/image12.png" class="card-img-top" alt="Vinland Saga">
+                        <div class="card-body">
+                            <h5 class="card-title">Vinland Saga</h5>
+                            <p class="card-text">Thorfinn pursues a journey with his father's killer in order to take revenge and end his life in a duel as an honorable warrior...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.8</span>
+                                <span><i class="fas fa-tv"></i> 24</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 12 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="12">
+                        <button class="favorite-btn" data-anime-id="12"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/image13.png" class="card-img-top" alt="Hell's Paradise">
+                        <div class="card-body">
+                            <h5 class="card-title">Hell's Paradise</h5>
+                            <p class="card-text">Gabimaru the Hollow, a ninja sentenced to death, is offered a pardon if he can retrieve the elixir of immortality from a mysterious island...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.3</span>
+                                <span><i class="fas fa-tv"></i> 13</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anime Card 13 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="13">
+                        <button class="favorite-btn" data-anime-id="13"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/anime1.png" class="card-img-top" alt="That Time I Got Reincarnated as a Slime">
+                        <div class="card-body">
+                            <h5 class="card-title">That Time I Got Reincarnated as a Slime</h5>
+                            <p class="card-text">Satoru Mikami is reincarnated in a fantasy world as a slime monster with unique powers and establishes a peaceful monster nation.</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.2</span>
+                                <span><i class="fas fa-tv"></i> 48+</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 14 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="14">
+                        <button class="favorite-btn favorited" data-anime-id="14"><i class="fas fa-heart"></i></button>
+                        <img src="Anime_image/anime2.png" class="card-img-top" alt="Mashle: Magic and Muscles">
+                        <div class="card-body">
+                            <h5 class="card-title">Mashle: Magic and Muscles</h5>
+                            <p class="card-text">In a world of magic, a muscle-bound boy with no magical abilities fights his way to the top using pure physical strength...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 7.9</span>
+                                <span><i class="fas fa-tv"></i> 12</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 15 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="15">
+                        <button class="favorite-btn" data-anime-id="15"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/anime3.png" class="card-img-top" alt="Solo Leveling">
+                        <div class="card-body">
+                            <h5 class="card-title">Solo Leveling</h5>
+                            <p class="card-text">Sung Jinwoo, a weak E-rank hunter, gains the ability to level up without limits after surviving a deadly dungeon...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 9.1</span>
+                                <span><i class="fas fa-tv"></i> 12</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anime Card 16 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="16">
+                        <button class="favorite-btn" data-anime-id="16"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/anime4.png" class="card-img-top" alt="The Eminence in Shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">The Eminence in Shadow</h5>
+                            <p class="card-text">A boy obsessed with becoming a "shadow broker" gets reincarnated in a fantasy world and builds his own secret organization...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.4</span>
+                                <span><i class="fas fa-tv"></i> 20</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anime Card 17 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="17">
+                        <button class="favorite-btn" data-anime-id="17"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/anime5.png" class="card-img-top" alt="The Eminence in Shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Campfire cooking in another world</h5>
+                            <p class="card-text">A boy obsessed with becoming a "shadow broker" gets reincarnated in a fantasy world and builds his own secret organization...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.4</span>
+                                <span><i class="fas fa-tv"></i> 20</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anime Card 18 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card anime-card" data-bs-toggle="modal" data-bs-target="#animeModal" data-anime-id="18">
+                        <button class="favorite-btn" data-anime-id="18"><i class="far fa-heart"></i></button>
+                        <img src="Anime_image/anime6.png" class="card-img-top" alt="The Eminence in Shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">How to Love Your Elf Bride</h5>
+                            <p class="card-text">A boy obsessed with becoming a "shadow broker" gets reincarnated in a fantasy world and builds his own secret organization...</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-star text-warning"></i> 8.4</span>
+                                <span><i class="fas fa-tv"></i> 20</span>
+                            </div>
+                            <button class="watch-btn"><i class="fas fa-play me-2"></i> Watch Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Anime Modal -->
+    <div class="modal fade anime-modal" id="animeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Anime Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="anime-details">
+                        <div class="anime-poster">
+                            <img id="modalAnimeImage" src="" alt="Anime Poster">
+                        </div>
+                        <div class="anime-info">
+                            <h2 id="modalAnimeTitle">Anime Title</h2>
+                            <div class="anime-meta">
+                                <span><i class="fas fa-star text-warning"></i> <span id="modalAnimeRating">0.0</span></span>
+                                <span><i class="fas fa-tv"></i> <span id="modalAnimeEpisodes">0</span> Episodes</span>
+                                <span><i class="fas fa-calendar-alt"></i> <span id="modalAnimeYear">2023</span></span>
+                                <span><i class="fas fa-clock"></i> <span id="modalAnimeDuration">24</span> min</span>
+                                <span><i class="fas fa-flag"></i> <span id="modalAnimeStatus">Ongoing</span></span>
+                            </div>
+                            <div class="anime-genres" id="modalAnimeGenres">
+                                <!-- Genres will be added here dynamically -->
+                            </div>
+                            <div class="anime-description" id="modalAnimeDescription">
+                                Anime description goes here...
+                            </div>
+                            <div class="d-flex gap-3">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-play me-2"></i> Watch Now
+                                </button>
+                                <button class="btn btn-outline-light" id="modalFavoriteBtn">
+                                    <i class="far fa-heart me-2"></i> Add to Favorites
+                                </button>
+                            </div>
+                            
+                            <div class="episodes-container">
+                                <h3 class="episodes-title">Episodes</h3>
+                                
+                                <div class="season-selector">
+                                    <button class="season-btn active">Season 1</button>
+                                    <button class="season-btn">Season 2</button>
+                                </div>
+                                
+                                <div class="video-container mb-4 d-none">
+                                    <iframe id="episodePlayer" src="" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                                
+                                <div class="episodes-grid" id="episodesGrid">
+                                    <!-- Episodes will be added here dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Anime data for the modal
+        const animeData = {
+            1: {
+                title: "Demon Slayer",
+                image: "Anime_image/gallery1.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/wUYwr3qO0Ac?si=S2qn9TsDMpsu76gE"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            2: {
+                title: "Attack on Titan",
+                image: "Anime_image/image3.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            3: {
+                title: "Jujutsu Kaisen",
+                image: "Anime_image/gallery3.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            4: {
+                title: "My Hero Academia",
+                image: "Anime_image/image5.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            5: {
+                title: "One Piece",
+                image: "Anime_image/gallery6.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            6: {
+                title: "Naruto Shippuden",
+                image: "Anime_image/animeBackground3.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            7: {
+                title: "Death Note",
+                image: "Anime_image/image8.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            8: {
+                title: "Tokyo Revengers",
+                image: "Anime_image/image9.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            9: {
+                title: "Chainsaw Man",
+                image: "Anime_image/image10.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            10: {
+                title: "Spy x Family",
+                image: "Anime_image/image11.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            11: {
+                title: "Vinland Saga",
+                image: "Anime_image/image12.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            12: {
+                title: "Hell's Paradise",
+                image: "Anime_image/image13.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            13: {
+                title: "That Time I Got Reincarnated as a Slime",
+                image: "Anime_image/anime7.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            14: {
+                title: "Mashle: Magic and Muscles",
+                image: "Anime_image/anime2.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            15: {
+                title: "Solo Leveling",
+                image: "Anime_image/Anime_logo.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            16: {
+                title: "The Eminence in Shadow",
+                image: "Anime_image/anime8.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            17: {
+                title: "Campfire cooking in another world",
+                image: "Anime_image/anime5.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            },
+            18: {
+                title: "How to Love Your Elf Bride",
+                image: "Anime_image/anime6.png",
+                rating: 8.7,
+                episodes: 26,
+                year: 2019,
+                duration: 24,
+                status: "Completed",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"],
+                description: "Tanjiro Kamado, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a demon slayer so that he can turn his sister back into a human, and kill the demon that massacred his family.",
+                isFavorite: true,
+                seasons: {
+                    "Season 1": [
+                        {
+                            title: "Cruelty",
+                            description: "Tanjiro Kamado lives with his family in the mountains, making a living by selling charcoal. One day, his entire family is slaughtered by a demon, with only his sister Nezuko surviving—but she's been turned into a demon herself!",
+                            thumbnail: "https://i.imgur.com/JQlE6iN.png",
+                            duration: "23:40",
+                            date: "Apr 6, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Trainer Sakonji Urokodaki",
+                            description: "Tanjiro begins training under Sakonji Urokodaki to become a Demon Slayer. Meanwhile, Nezuko sleeps in a box to recover from her injuries.",
+                            thumbnail: "https://i.imgur.com/XWQvV9L.png",
+                            duration: "23:40",
+                            date: "Apr 13, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        },
+                        {
+                            title: "Sabito and Makomo",
+                            description: "Tanjiro continues his training under Urokodaki, meeting two mysterious children named Sabito and Makomo who help him improve his swordsmanship.",
+                            thumbnail: "https://i.imgur.com/9LQzQ9W.png",
+                            duration: "23:40",
+                            date: "Apr 20, 2019",
+                            videoId: "https://www.youtube.com/embed/d6kBeJjTGnY?autoplay=1"
+                        }
+                    ],
+                    "Season 2": [
+                        {
+                            title: "Flame Hashira Kyojuro Rengoku",
+                            description: "Tanjiro and his friends board the Mugen Train to investigate disappearances, where they meet the Flame Hashira, Kyojuro Rengoku.",
+                            thumbnail: "https://i.imgur.com/4Q5Z9XJ.png",
+                            duration: "23:40",
+                            date: "Oct 10, 2021",
+                            videoId: "ATJYac_dORw"
+                        },
+                        {
+                            title: "Deep Sleep",
+                            description: "The demon Enmu puts all the passengers on the train into a deep sleep, forcing Tanjiro to fight his way out of a dream world.",
+                            thumbnail: "https://i.imgur.com/7V9XhYF.png",
+                            duration: "23:40",
+                            date: "Oct 17, 2021",
+                            videoId: "6TbOfs7D_f8"
+                        }
+                    ]
+                }
+            }
+        };
+        
+        // Initialize anime modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const animeModal = document.getElementById('animeModal');
+            
+            if (animeModal) {
+                animeModal.addEventListener('show.bs.modal', (event) => {
+                    const button = event.relatedTarget;
+                    const animeId = button.getAttribute('data-anime-id');
+                    const anime = animeData[animeId];
+                    
+                    if (anime) {
+                        // Set basic info
+                        document.getElementById('modalAnimeTitle').textContent = anime.title;
+                        document.getElementById('modalAnimeImage').src = anime.image;
+                        document.getElementById('modalAnimeImage').alt = anime.title;
+                        document.getElementById('modalAnimeRating').textContent = anime.rating;
+                        document.getElementById('modalAnimeEpisodes').textContent = anime.episodes;
+                        document.getElementById('modalAnimeYear').textContent = anime.year;
+                        document.getElementById('modalAnimeDuration').textContent = anime.duration;
+                        document.getElementById('modalAnimeStatus').textContent = anime.status;
+                        document.getElementById('modalAnimeDescription').textContent = anime.description;
+                        
+                        // Set favorite button state
+                        const favoriteBtn = document.getElementById('modalFavoriteBtn');
+                        if (anime.isFavorite) {
+                            favoriteBtn.innerHTML = '<i class="fas fa-heart me-2"></i> Remove from Favorites';
+                            favoriteBtn.classList.add('btn-primary');
+                            favoriteBtn.classList.remove('btn-outline-light');
+                        } else {
+                            favoriteBtn.innerHTML = '<i class="far fa-heart me-2"></i> Add to Favorites';
+                            favoriteBtn.classList.add('btn-outline-light');
+                            favoriteBtn.classList.remove('btn-primary');
+                        }
+                        
+                        // Set genres
+                        const genresContainer = document.getElementById('modalAnimeGenres');
+                        genresContainer.innerHTML = '';
+                        anime.genres.forEach(genre => {
+                            const badge = document.createElement('span');
+                            badge.className = 'genre-badge';
+                            badge.textContent = genre;
+                            genresContainer.appendChild(badge);
+                        });
+                        
+                        // Set seasons and episodes
+                        const episodesGrid = document.getElementById('episodesGrid');
+                        episodesGrid.innerHTML = '';
+                        
+                        // Show first season by default
+                        const firstSeason = Object.keys(anime.seasons)[0];
+                        if (firstSeason) {
+                            anime.seasons[firstSeason].forEach((episode, index) => {
+                                const episodeCard = document.createElement('div');
+                                episodeCard.className = 'episode-card';
+                                episodeCard.innerHTML = `
+                                    <div class="episode-thumbnail">
+                                        <img src="${episode.thumbnail}" alt="${episode.title}">
+                                        <span class="episode-number">Episode ${index + 1}</span>
+                                        <span class="episode-duration">${episode.duration}</span>
+                                    </div>
+                                    <div class="episode-info">
+                                        <h5 class="episode-title">${episode.title}</h5>
+                                        <p class="episode-description">${episode.description}</p>
+                                        <span class="episode-date">${episode.date}</span>
+                                        <button class="watch-episode-btn" data-video-id="${episode.videoId}">
+                                            <i class="fas fa-play me-2"></i> Watch Episode
+                                        </button>
+                                    </div>
+                                `;
+                                episodesGrid.appendChild(episodeCard);
+                            });
+                        }
+                        
+                        // Handle season selection
+                        const seasonBtns = document.querySelectorAll('.season-btn');
+                        seasonBtns.forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                seasonBtns.forEach(b => b.classList.remove('active'));
+                                btn.classList.add('active');
+                                
+                                const seasonName = btn.textContent;
+                                if (anime.seasons[seasonName]) {
+                                    episodesGrid.innerHTML = '';
+                                    anime.seasons[seasonName].forEach((episode, index) => {
+                                        const episodeCard = document.createElement('div');
+                                        episodeCard.className = 'episode-card';
+                                        episodeCard.innerHTML = `
+                                            <div class="episode-thumbnail">
+                                                <img src="${episode.thumbnail}" alt="${episode.title}">
+                                                <span class="episode-number">Episode ${index + 1}</span>
+                                                <span class="episode-duration">${episode.duration}</span>
+                                            </div>
+                                            <div class="episode-info">
+                                                <h5 class="episode-title">${episode.title}</h5>
+                                                <p class="episode-description">${episode.description}</p>
+                                                <span class="episode-date">${episode.date}</span>
+                                                <button class="watch-episode-btn" data-video-id="${episode.videoId}">
+                                                    <i class="fas fa-play me-2"></i> Watch Episode
+                                                </button>
+                                            </div>
+                                        `;
+                                        episodesGrid.appendChild(episodeCard);
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+                
+                // Handle episode play button
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('watch-episode-btn') || 
+                        e.target.closest('.watch-episode-btn')) {
+                        const button = e.target.classList.contains('watch-episode-btn') ? 
+                            e.target : e.target.closest('.watch-episode-btn');
+                        const videoId = button.getAttribute('data-video-id');
+                        
+                        const videoContainer = document.querySelector('.video-container');
+                        const episodePlayer = document.getElementById('episodePlayer');
+                        
+                        episodePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                        videoContainer.classList.remove('d-none');
+                        
+                        // Scroll to video player
+                        videoContainer.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+                
+                // Handle favorite button in modal
+                const favoriteBtn = document.getElementById('modalFavoriteBtn');
+                if (favoriteBtn) {
+                    favoriteBtn.addEventListener('click', () => {
+                        if (favoriteBtn.classList.contains('btn-outline-light')) {
+                            favoriteBtn.innerHTML = '<i class="fas fa-heart me-2"></i> Remove from Favorites';
+                            favoriteBtn.classList.add('btn-primary');
+                            favoriteBtn.classList.remove('btn-outline-light');
+                        } else {
+                            favoriteBtn.innerHTML = '<i class="far fa-heart me-2"></i> Add to Favorites';
+                            favoriteBtn.classList.add('btn-outline-light');
+                            favoriteBtn.classList.remove('btn-primary');
+                        }
+                    });
+                }
+            }
+            
+            // Handle favorite buttons on cards
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const icon = btn.querySelector('i');
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        btn.classList.add('favorited');
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        btn.classList.remove('favorited');
+                    }
+                });
+            });
+            
+            // Handle list tabs
+            document.querySelectorAll('.list-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.list-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    // Here you would typically filter the anime list based on the selected tab
+                });
+            });
+            
+            // Prevent card clicks when clicking on favorite button
+            document.querySelectorAll('.anime-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.favorite-btn')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
